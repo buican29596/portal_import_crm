@@ -327,7 +327,7 @@ class ImportDataController with ChangeNotifier {
     String timestamp = DateTime.now().toString().replaceAll('-', '').replaceAll(':', '').replaceAll(' ', '').substring(0, 12);
 
     final anchor = html.AnchorElement(href: 'data:application/octet-stream;base64,$base64')
-      ..setAttribute("download", "${fileName?.replaceAll('.xlsx','')}$timestamp.xlsx")
+      ..setAttribute("download", "${fileName?.replaceAll('.xlsx','_')}$timestamp.xlsx")
       ..click();
 
     showFlushbarMessage(

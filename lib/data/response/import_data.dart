@@ -71,7 +71,6 @@ class ImportData {
     this.insertSuccess = false,
   });
 
-
   factory ImportData.fromMap(Map<String, dynamic> map) {
     String? parseString(dynamic value) => value?.toString();
     double? parseDouble(dynamic value) => value == null ? null : double.tryParse(value.toString());
@@ -84,10 +83,24 @@ class ImportData {
     bool isPaymentDateValid = false;
     if (paymentDate != null) {
       try {
-        DateFormat('dd/MM/yyyy').parseStrict(paymentDate);
-        isPaymentDateValid = true;
+        DateFormat dateFormat = DateFormat("dd/MM/yyyy");
+        DateTime parsedDate = dateFormat.parseStrict(paymentDate);
+        if(parsedDate.toString().isNotEmpty){
+          isPaymentDateValid = true;
+        }else{
+          final date = DateTime.parse(paymentDate);
+          paymentDate = DateFormat('dd/MM/yyyy').format(date);
+          isPaymentDateValid = true;
+        }
       } catch (e) {
         isPaymentDateValid = false;
+        try {
+          final date = DateTime.parse(paymentDate??'');
+          paymentDate = DateFormat('dd/MM/yyyy').format(date);
+          isPaymentDateValid = true;
+        } catch (e) {
+          isPaymentDateValid = false;
+        }
       }
     }
 
@@ -125,7 +138,7 @@ class ImportData {
       description: parseString(map['Description']),
       qty: parseInt(map['Qty']),
       totalAmount: parseDouble(map['TotalAmount']),
-      paymentDate: parseString(map['Paymentdate']),
+      paymentDate: paymentDate,
       paymentMethod: parseString(map['PaymentMethod']),
       isValidPhoneNumber: isMobileValid,
       isValidPaymentDate: isPaymentDateValid,

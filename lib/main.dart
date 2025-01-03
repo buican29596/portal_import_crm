@@ -39,7 +39,7 @@ class PortalImport extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const LoginScreen(),
+      home: const SelectionArea(child: LoginScreen()),
     );
   }
 }

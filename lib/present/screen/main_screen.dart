@@ -156,7 +156,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   const SizedBox(height: 16),
                   if(selectedIndex == 0)...[
-                    const Expanded(child: ImportDataScreen())
+                    const Expanded(child: SelectionArea(child: ImportDataScreen()))
                   ],
                 ],
               ),
